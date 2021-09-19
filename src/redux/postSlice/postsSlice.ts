@@ -3,9 +3,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
 export const fetchPosts = createAsyncThunk(
-    "fetchPosts", async (_, { rejectWithValue }) => {
+    "posts/fetchPosts", async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=20")
         
             if (!response.ok) {      
               return new Error("Something went wrong")
@@ -19,6 +19,22 @@ export const fetchPosts = createAsyncThunk(
     }
 )
 
+export const asyncDeletePosts = createAsyncThunk(
+    "posts/asyncDeletePosts", async (id: number, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+            method: "DELETE"
+        })
+            if (!response.ok) {
+                throw new Error("Something went wrong")   
+            }
+            dispatch(deletePost({id}))
+        } catch (error: any) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
 const initialState: IPosts = {
     posts: [],
     status: null,
@@ -29,8 +45,8 @@ const postsSlice = createSlice({
     name: "posts",
     initialState,
     reducers: {
-        deletePost: (state, action: PayloadAction<number>) => {
-          state.posts = state.posts.filter(el => el.id !== action.payload)
+        deletePost: (state, action) => {
+          state.posts = state.posts.filter(el => el.id !== action.payload.id)
         }
     },
     extraReducers: {

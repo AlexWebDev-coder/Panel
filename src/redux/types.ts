@@ -1,3 +1,4 @@
+import { SlideProps } from "@material-ui/core/Slide";
 
 // Posts interface
 export interface IPostsState {
@@ -11,3 +12,5 @@ export interface IPosts {
     status: string | null
     error: string | null
 }
+
+export type TransitionProps = Omit<SlideProps, "direction">;

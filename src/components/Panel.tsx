@@ -38,7 +38,9 @@ const Panel: FC = () => {
               <Button onClick={() => history.push("/")}>Posts</Button>
             </ListItem>
             <ListItem>
-              <Button>Comments</Button>
+              <Button onClick={() => history.push("/comments")}>
+                Comments
+              </Button>
             </ListItem>
             <ListItem>
               <Button>Albums</Button>
