@@ -27,7 +27,7 @@ function TransitionRight(props: TransitionProps) {
   return <Slide {...props} direction="up" />;
 }
 
-const PostTable: FC = () => {
+const PostTable: FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { posts, error, status } = useAppSelector((state) => state.post);
 

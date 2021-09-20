@@ -27,8 +27,7 @@ export const fetchUsersDelete = createAsyncThunk(
             if (!response.ok) {
                 throw new Error("Something went wrong")
             }
-            dispatch(deleteUsers(id))
-            
+            dispatch(deleteUsers({ id }))
         } catch (error: any) {
             return rejectWithValue(error.message)
         }

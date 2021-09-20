@@ -17,46 +17,53 @@ import { useAppDispatch, useAppSelector } from "../hook/hooks";
 // custom function title for table
 import { titleTable } from "../Routing";
 import { fetchComments } from "../redux/commentSlice/commentSlice";
+import { ICommentState } from "../redux/commentSlice/types";
 
 const CommentsTable: FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { comments } = useAppSelector((state) => state.comment);
+  const { comments, error } = useAppSelector((state) => state.comment);
 
   useEffect(() => {
     dispatch(fetchComments());
   }, []);
 
   return (
-    <Box className="width-table">
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>{titleTable("ID")}</TableCell>
-              <TableCell align="left">{titleTable("Post/id")}</TableCell>
-              <TableCell align="left">{titleTable("Name")}</TableCell>
-              <TableCell align="left">{titleTable("Email")}</TableCell>
-              <TableCell align="left">{titleTable("Body")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {comments.map(
-              (comm): JSX.Element => (
-                <TableRow key={comm.id}>
-                  <TableCell component="th" scope="row">
-                    {comm.id}
-                  </TableCell>
-                  <TableCell align="left">{comm.postId}</TableCell>
-                  <TableCell align="left">{comm.name}</TableCell>
-                  <TableCell align="left">{comm.email}</TableCell>
-                  <TableCell align="left">{comm.body}</TableCell>
+    <>
+      {error ? (
+        <h2 className="width-table">Error: {error}</h2>
+      ) : (
+        <Box className="width-table">
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{titleTable("ID")}</TableCell>
+                  <TableCell align="left">{titleTable("Post/id")}</TableCell>
+                  <TableCell align="left">{titleTable("Name")}</TableCell>
+                  <TableCell align="left">{titleTable("Email")}</TableCell>
+                  <TableCell align="left">{titleTable("Body")}</TableCell>
                 </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+              </TableHead>
+              <TableBody>
+                {comments.map(
+                  (comm: ICommentState): JSX.Element => (
+                    <TableRow key={comm.id}>
+                      <TableCell component="th" scope="row">
+                        {comm.id}
+                      </TableCell>
+                      <TableCell align="left">{comm.postId}</TableCell>
+                      <TableCell align="left">{comm.name}</TableCell>
+                      <TableCell align="left">{comm.email}</TableCell>
+                      <TableCell align="left">{comm.body}</TableCell>
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
+    </>
   );
 };
 export { CommentsTable };
