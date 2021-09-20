@@ -6,3 +6,8 @@
    z-index: 9999;
    color: #fff
 }
+
+.table-row:hover {
+   background-color: #999;
+   transition: .4s;
+}

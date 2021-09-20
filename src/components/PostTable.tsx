@@ -10,16 +10,16 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
-import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
-import Typography from "@material-ui/core/Typography";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 // hooks
 import { useAppDispatch, useAppSelector } from "../hook/hooks";
 // createAsyncThunk && reducer
 import { fetchPosts, asyncDeletePosts } from "../redux/postSlice/postsSlice";
 // types
-import { TransitionProps, IPostsState } from "../redux/types";
+import { TransitionProps, IPostsState } from "../redux/postSlice/types";
 // All title function
 import { titleTable } from "../Routing";
 
@@ -42,10 +42,14 @@ const PostTable: FC = () => {
   }, []);
 
   const deleteAsyncPost =
-    (Transition: React.ComponentType<TransitionProps>, element: any) => () => {
-      dispatch(asyncDeletePosts(element.id));
+    (
+      Transition: React.ComponentType<TransitionProps>,
+      element: { id: number }
+    ) =>
+    () => {
       setTransition(() => Transition);
       setOpen(true);
+      dispatch(asyncDeletePosts(element.id));
     };
 
   return (
@@ -72,11 +76,13 @@ const PostTable: FC = () => {
                       <TableCell align="left">{post.title}</TableCell>
                       <TableCell align="left">{post.body}</TableCell>
                       <TableCell align="center">
-                        <Button
-                          onClick={deleteAsyncPost(TransitionRight, post)}
-                        >
-                          <DeleteOutlineRoundedIcon color="secondary" />
-                        </Button>
+                        <Tooltip title="Delete" arrow>
+                          <IconButton
+                            onClick={deleteAsyncPost(TransitionRight, post)}
+                          >
+                            <DeleteOutlineRoundedIcon color="secondary" />
+                          </IconButton>
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   )

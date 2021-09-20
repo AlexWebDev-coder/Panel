@@ -1,4 +1,4 @@
-import { IPosts, IPostsState } from './../types';
+import { IPosts, IPostsState } from './types';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 

@@ -7,11 +7,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/styles";
+import Typography from "@material-ui/core/Typography";
 // Components
 import { PostTable } from "./components/PostTable";
-import { CommentTable } from "./components/CommentTable";
 import { useAppSelector } from "./hook/hooks";
-import Typography from "@material-ui/core/Typography";
+import { CommentsTable } from "./components/CommentTable";
+import { UsersTable } from "./components/UsersTable";
 
 export const titleTable = (t: string) => (
   <Typography variant="h6">{t}</Typography>
@@ -26,10 +27,11 @@ const useStyles = makeStyles(() => ({
 
 const Routing: FC = () => {
   const classes = useStyles();
-  const { status } = useAppSelector((state) => state.post);
+  const { post, comment, users } = useAppSelector((state) => state);
+
   return (
     <>
-      {status === "loading" ? (
+      {(post.status || comment.status || users.status) === "loading" ? (
         <Backdrop className={classes.backdrop} open>
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -40,7 +42,8 @@ const Routing: FC = () => {
 
         <Switch>
           <Route exact path="/" component={PostTable} />
-          <Route path="/comments" component={CommentTable} />
+          <Route path="/comments" component={CommentsTable} />
+          <Route path="/users" component={UsersTable} />
         </Switch>
       </BrowserRouter>
     </>
