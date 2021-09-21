@@ -6,7 +6,7 @@ import { IComments, ICommentState } from './types';
 export const fetchComments = createAsyncThunk(
     "comment/fetchComments", async (_, {rejectWithValue}) => {
         try {
-            const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=5")
+            const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=100")
 
             if (!response.ok) {
                 throw new Error("Something went wrong")
