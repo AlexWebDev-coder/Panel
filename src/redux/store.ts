@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import postReducer from "./postSlice/postsSlice"
 import commentReducer from "./commentSlice/commentSlice"
 import usersReducer from "./usersSlice/userSlice"
+import todoReducer from "./todosSlice/todosSlice"
 
 export const store = configureStore({
     reducer: {
         post: postReducer,
         comment: commentReducer,
-        users: usersReducer
+        users: usersReducer,
+        todo: todoReducer
     }
 })
 

@@ -8,7 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/system";
 
@@ -18,14 +17,13 @@ import { useAppDispatch, useAppSelector } from "../hook/hooks";
 import { titleTable } from "../Routing";
 import { fetchComments } from "../redux/commentSlice/commentSlice";
 import { ICommentState } from "../redux/commentSlice/types";
-import { Link } from "@material-ui/core";
 
 const CommentsTable: FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { comments, error } = useAppSelector((state) => state.comment);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [postsPerPage] = useState<number>(5);
+  const [postsPerPage] = useState<number>(8);
 
   useEffect(() => {
     dispatch(fetchComments());
@@ -72,6 +70,7 @@ const CommentsTable: FC = (): JSX.Element => {
               </TableBody>
             </Table>
           </TableContainer>
+          {/* Pagination Component */}
           <Box
             sx={{
               display: "flex",

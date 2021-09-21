@@ -43,7 +43,7 @@ const Panel: FC = () => {
               </Button>
             </ListItem>
             <ListItem>
-              <Button>Todos</Button>
+              <Button onClick={() => history.push("/todos")}>Todos</Button>
             </ListItem>
             <ListItem>
               <Button onClick={() => history.push("/users")}>Users</Button>
