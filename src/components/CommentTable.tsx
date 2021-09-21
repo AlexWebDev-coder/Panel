@@ -25,9 +25,7 @@ const CommentsTable: FC = (): JSX.Element => {
   const { comments, error } = useAppSelector((state) => state.comment);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [postsPerPage] = useState<number>(8);
-
-  const pageNumbers: number[] = [];
+  const [postsPerPage] = useState<number>(5);
 
   useEffect(() => {
     dispatch(fetchComments());
@@ -39,13 +37,6 @@ const CommentsTable: FC = (): JSX.Element => {
   const currentPosts = comments.slice(indexOfFirstPost, indexOfLastPost);
 
   const totalPosts = comments.length;
-
-  // Change page
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
-  }
 
   return (
     <>
@@ -88,16 +79,10 @@ const CommentsTable: FC = (): JSX.Element => {
               mt: "10px",
             }}
           >
-            {pageNumbers.map((num: number) => (
-              <Button
-                key={num}
-                onClick={() => paginate(num)}
-                variant="outlined"
-                style={{ borderRadius: "60px" }}
-              >
-                {num}
-              </Button>
-            ))}
+            <Pagination
+              count={Math.ceil(totalPosts / postsPerPage)}
+              onChange={(event, val) => setCurrentPage(val)}
+            />
           </Box>
         </Box>
       )}
