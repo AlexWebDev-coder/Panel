@@ -1,7 +1,7 @@
 /** @format */
 
 import { FC } from "react";
-import { Panel } from "./components/Panel";
+import { Panel } from "./components/RoutingPanel";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 // Mui components
 import Backdrop from "@material-ui/core/Backdrop";
