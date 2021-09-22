@@ -1,7 +1,12 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ITodo } from './types';
+import { ITodo, ITodoState } from './types';
 
-
+const initialState: ITodo = {
+    todo: [],
+    status: null,
+    error: null
+}
 
 export const fetchTodo = createAsyncThunk(
     "todo/fetchTodo", async (_, { rejectWithValue }) => {
@@ -18,13 +23,45 @@ export const fetchTodo = createAsyncThunk(
     }
 )
 
+export const fetchAddNewTodo = createAsyncThunk(
+    "todo/fetchAddNewTodo", async (title: string, { rejectWithValue, dispatch }) => {
+        try {
+            const todo = {
+                id: Date.now(),
+                title,
+                userId: 1,
+                completed: false,
+            };
+            const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(todo)
+            })
+            if (!response.ok) {
+                throw new Error("Can't add task. Server error")
+            }
+            dispatch(addTodo(todo))
+        } catch (error: any) {
+            return rejectWithValue(error.message)
+        }  
+    }
+)
 
-const initialState: ITodo = {
-    todo: [],
-    status: null,
-    error: null
-}
-
+export const fetchAsyncDeleteTodo = createAsyncThunk(
+    "todo/fetchAsyncDeleteTodo", async (id: number, { rejectWithValue, dispatch }) => {
+        try {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+                method: 'DELETE'
+            })
+            if (!response.ok) {
+                throw new Error("Can't delete task. Server error")
+            }
+            dispatch(deleteTodo({ id }))
+        } catch (error: any) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
 
 const todoSlice = createSlice({
     name: "todo",
@@ -36,8 +73,8 @@ const todoSlice = createSlice({
         deleteTodo: (state, action) => {
             state.todo = state.todo.filter((el) => el.id !== action.payload.id)
         },
-        toggleChecked: (state, action) => {
-            const checked = state.todo.find(todo => todo.id !== action.payload.id)
+        toggleChecked: (state, action: PayloadAction<number | any>) => {
+            const checked = state.todo.find(todo => todo.id !== action.payload)
 
             if (checked) {
                 checked.completed = !checked.completed

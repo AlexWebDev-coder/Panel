@@ -10,7 +10,14 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import { ListItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Divider from "@mui/material/Divider";
+
 import { useHistory } from "react-router";
+
+import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
+import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
+import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
+import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 
 const Panel: FC = () => {
   const history = useHistory();
@@ -20,12 +27,7 @@ const Panel: FC = () => {
       <CssBaseline />
       <AppBar position="fixed">
         <Toolbar>
-          <Typography
-            style={{ paddingLeft: "150px" }}
-            variant="h6"
-            noWrap
-            component="div"
-          >
+          <Typography style={{ paddingLeft: "200px" }} variant="h6">
             Panel
           </Typography>
         </Toolbar>
@@ -35,19 +37,29 @@ const Panel: FC = () => {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem>
-              <Button onClick={() => history.push("/")}>Posts</Button>
-            </ListItem>
-            <ListItem>
-              <Button onClick={() => history.push("/comments")}>
-                Comments
+              <Button onClick={() => history.push("/")}>
+                <PostAddRoundedIcon /> &nbsp; Posts
               </Button>
             </ListItem>
             <ListItem>
-              <Button onClick={() => history.push("/todos")}>Todos</Button>
+              <Button onClick={() => history.push("/comments")}>
+                <QuestionAnswerRoundedIcon />
+                &nbsp; Comments
+              </Button>
             </ListItem>
             <ListItem>
-              <Button onClick={() => history.push("/users")}>Users</Button>
+              <Button onClick={() => history.push("/todos")}>
+                <FormatListNumberedRoundedIcon />
+                &nbsp; Todos
+              </Button>
             </ListItem>
+            <ListItem>
+              <Button onClick={() => history.push("/users")}>
+                <GroupRoundedIcon />
+                &nbsp; Users
+              </Button>
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>

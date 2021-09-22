@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { FC, useEffect, useState } from "react";
-import { addTodo, fetchTodo } from "../redux/todosSlice/todosSlice";
+import { fetchTodo, fetchAddNewTodo } from "../redux/todosSlice/todosSlice";
 import { TodoItem } from "../components/TodoItem";
 import { useAppDispatch, useAppSelector } from "../hook/hooks";
 import { Container, Grid } from "@material-ui/core";
@@ -9,18 +9,21 @@ import { TextField, Button } from "@mui/material";
 import { Box } from "@mui/system";
 
 import Snackbar from "@mui/material/Snackbar";
-import Slide, { SlideProps } from "@mui/material/Slide";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "../redux/postSlice/types";
 
-type TransitionProps = Omit<SlideProps, "direction">;
-function TransitionLeft(props: TransitionProps) {
+const TransitionLeft = (props: TransitionProps) => {
   return <Slide {...props} direction="left" />;
-}
+};
 
 const Todos: FC = () => {
   const dispatch = useAppDispatch();
   const { todo, error } = useAppSelector((state) => state.todo);
   const [title, setTitle] = useState<string>("");
+
   const [open, setOpen] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+
   const [transition, setTransition] = React.useState<
     React.ComponentType<TransitionProps> | undefined
   >(undefined);
@@ -28,14 +31,10 @@ const Todos: FC = () => {
   const handleAdd =
     (Transition: React.ComponentType<TransitionProps>) => () => {
       if (title.trim().length) {
-        dispatch(
-          addTodo({
-            id: Date.now(),
-            title,
-            completed: false,
-          })
-        );
+        dispatch(fetchAddNewTodo(title));
         setTitle("");
+        setTransition(() => Transition);
+        setSuccess(true);
       } else {
         setTransition(() => Transition);
         setOpen(true);
@@ -45,6 +44,10 @@ const Todos: FC = () => {
   useEffect(() => {
     dispatch(fetchTodo());
   }, []);
+
+  const searchTodoElement = todo.filter((el) => {
+    return el.title.toUpperCase().includes(title.toUpperCase());
+  });
 
   return (
     <Container>
@@ -68,7 +71,7 @@ const Todos: FC = () => {
           </Box>
 
           <Grid container spacing={2}>
-            {todo.map((todo, index) => (
+            {searchTodoElement.map((todo, index) => (
               <TodoItem
                 key={todo.id}
                 id={todo.id}
@@ -81,11 +84,15 @@ const Todos: FC = () => {
         </>
       )}
       <Snackbar
-        open={open}
+        open={open || success}
         autoHideDuration={3000}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          return open ? setOpen(false) : success ? setSuccess(false) : null;
+        }}
         TransitionComponent={transition}
-        message="The field cannot be empty"
+        message={
+          open ? "The field cannot be empty" : success ? "Success added" : null
+        }
         key={transition ? transition.name : ""}
       />
     </Container>

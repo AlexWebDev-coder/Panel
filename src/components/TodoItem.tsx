@@ -12,8 +12,10 @@ import Checkbox from "@mui/material/Checkbox";
 import RestoreFromTrashRoundedIcon from "@mui/icons-material/RestoreFromTrashRounded";
 import { useAppDispatch, useAppSelector } from "../hook/hooks";
 
-import { deleteTodo, toggleChecked } from "../redux/todosSlice/todosSlice";
-import { ITodoState } from "../redux/todosSlice/types";
+import {
+  fetchAsyncDeleteTodo,
+  toggleChecked,
+} from "../redux/todosSlice/todosSlice";
 
 interface IProps {
   id: number;
@@ -31,7 +33,7 @@ const TodoItem: FC<IProps> = (props) => {
       <Card sx={{ maxWidth: 345, mt: 2 }}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Todo: # {index + 1}
+            Todo: # {id}
           </Typography>
           <Typography variant="h5" color="text.secondary">
             {title}
@@ -50,7 +52,8 @@ const TodoItem: FC<IProps> = (props) => {
               },
             }}
           />
-          <Button onClick={() => dispatch(deleteTodo({ id }))}>
+
+          <Button onClick={() => dispatch(fetchAsyncDeleteTodo(id))}>
             <RestoreFromTrashRoundedIcon />
           </Button>
         </CardActions>

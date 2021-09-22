@@ -29,7 +29,7 @@ import { UsersItem } from "./ItemUsersTable";
 
 const UsersTable: FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { users, error } = useAppSelector((state) => state.users);
+  const { users, error, status } = useAppSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -56,7 +56,7 @@ const UsersTable: FC = (): JSX.Element => {
               </TableHead>
               <TableBody>
                 {users.map(
-                  (user): JSX.Element => (
+                  (user: IUsersState): JSX.Element => (
                     <UsersItem
                       key={user.id}
                       id={user.id}
