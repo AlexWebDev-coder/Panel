@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import { Panel } from "./components/RoutingPanel";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 // Mui components
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 // Components
 import { PostTable } from "./components/PostTable";
 import { useAppSelector } from "./hook/hooks";
-import { CommentsTable } from "./components/CommentTable";
+import { CommentsTable } from "./components/comments/CommentTable";
 import { UsersTable } from "./components/UsersTable";
 import { Todos } from "./components/Todos";
 

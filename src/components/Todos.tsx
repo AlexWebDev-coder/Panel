@@ -63,7 +63,7 @@ const Todos: FC = () => {
             }}
           >
             <TextField
-              placeholder="Add..."
+              placeholder="Add and Search todos..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
