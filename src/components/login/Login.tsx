@@ -42,9 +42,14 @@ const Login: FC = () => {
   const { username, password } = useAppSelector((state) => state.comment.logIn);
 
   const handleSubmit = () => {
-    logIn(data);
-    setData({ username: "", password: "" });
-    setOpen(false);
+    if (data.username === "admin" && data.password === "123") {
+      logIn(data);
+      setData({ username: "", password: "" });
+      setOpen(false);
+    } else {
+      alert("This user does not exist");
+      setData({ username: "", password: "" });
+    }
   };
 
   const handleClose = () => {
@@ -90,8 +95,10 @@ const Login: FC = () => {
             margin="normal"
             name="username"
             fullWidth
+            placeholder="Example: admin"
             value={data.username}
             onChange={(e) => handleChange(e)}
+            error={data.username.length === 0 ? true : false}
           />
           <TextField
             label="Password"
@@ -99,8 +106,10 @@ const Login: FC = () => {
             margin="normal"
             name="password"
             fullWidth
+            placeholder="Example: 123"
             value={data.password}
             onChange={(e) => handleChange(e)}
+            error={data.password.length === 0 ? true : false}
           />
         </DialogContent>
         <DialogActions>
