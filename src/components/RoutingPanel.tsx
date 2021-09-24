@@ -12,6 +12,8 @@ import { ListItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Divider from "@mui/material/Divider";
 
+import { Login } from "./login/Login";
+
 import { useHistory } from "react-router";
 
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
@@ -19,17 +21,15 @@ import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 
-const Panel: FC = () => {
+const Panel: FC = (): JSX.Element => {
   const history = useHistory();
 
   return (
     <Box>
       <CssBaseline />
       <AppBar position="fixed">
-        <Toolbar>
-          <Typography style={{ paddingLeft: "200px" }} variant="h6">
-            Panel
-          </Typography>
+        <Toolbar style={{ display: "flex", justifyContent: "end" }}>
+          <Login />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent">

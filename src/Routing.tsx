@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import { Panel } from "./components/RoutingPanel";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 // Mui components
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -15,11 +15,11 @@ import { CommentsTable } from "./components/comments/CommentTable";
 import { UsersTable } from "./components/UsersTable";
 import { Todos } from "./components/Todos";
 
-export const titleTable = (t: string) => (
-  <Typography variant="h6">{t}</Typography>
+export const titleTable = (T: string) => (
+  <Typography variant="h6">{T}</Typography>
 );
 
-const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(() => ({
   backdrop: {
     zIndex: 1,
     color: "#fff",

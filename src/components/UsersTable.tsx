@@ -1,41 +1,33 @@
 /** @format */
 
-import { FC, useState, useEffect, Fragment } from "react";
+import { FC, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
 
 import { titleTable } from "../Routing";
-import { useAppDispatch, useAppSelector } from "../hook/hooks";
-import {
-  deleteUsers,
-  fetchUsers,
-  fetchUsersDelete,
-} from "../redux/usersSlice/userSlice";
+import { useAppSelector, useAction } from "../hook/hooks";
+
 import { IUsersState } from "../redux/usersSlice/types";
 
 import { UsersItem } from "./ItemUsersTable";
 
 const UsersTable: FC = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const { users, error, status } = useAppSelector((state) => state.users);
+  const { users, error } = useAppSelector((state) => state.users);
+  const { username, password } = useAppSelector((state) => state.comment.logIn);
+
+  const { fetchUsers, fetchUsersDelete } = useAction();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    fetchUsers();
   }, []);
 
-  const deleteUsersItem = (id: number) => dispatch(fetchUsersDelete(id));
+  const deleteUsersItem = (id: number) => fetchUsersDelete(id);
 
   return (
     <>
@@ -51,7 +43,9 @@ const UsersTable: FC = (): JSX.Element => {
                   <TableCell align="left">{titleTable("ID")}</TableCell>
                   <TableCell align="left">{titleTable("Name")}</TableCell>
                   <TableCell align="left">{titleTable("Email")}</TableCell>
-                  <TableCell align="center">{titleTable("Action")}</TableCell>
+                  {username && password ? (
+                    <TableCell align="center">{titleTable("Action")}</TableCell>
+                  ) : null}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -62,7 +56,7 @@ const UsersTable: FC = (): JSX.Element => {
                       id={user.id}
                       name={user.name}
                       email={user.email}
-                      username={user.username}
+                      userName={user.username}
                       address={user.address}
                       deleteUsersItem={deleteUsersItem}
                     />

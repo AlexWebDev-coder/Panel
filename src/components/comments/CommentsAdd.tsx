@@ -11,12 +11,12 @@ import IconButton from "@mui/material/IconButton";
 import AddTaskRoundedIcon from "@mui/icons-material/AddTaskRounded";
 import Tooltip from "@mui/material/Tooltip";
 
-import { useAppDispatch } from "../../hook/hooks";
-import { fetchCommentsAdd } from "../../redux/commentSlice/commentSlice";
+import { useAction } from "../../hook/hooks";
 
 const CommentsAdd: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
+
+  const { fetchCommentsAdd } = useAction();
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -24,9 +24,7 @@ const CommentsAdd: FC = () => {
 
   const addNewComments = () => {
     if (name && email && body) {
-      dispatch(
-        fetchCommentsAdd({ postId: 1, id: Date.now(), name, email, body })
-      );
+      fetchCommentsAdd({ postId: 1, id: Date.now(), name, email, body });
       setOpen(false);
       clearInput();
     } else alert("Syntax error");

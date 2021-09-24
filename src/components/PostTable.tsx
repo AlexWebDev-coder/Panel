@@ -15,21 +15,22 @@ import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 // hooks
-import { useAppDispatch, useAppSelector } from "../hook/hooks";
-// createAsyncThunk && reducer
-import { fetchPosts, asyncDeletePosts } from "../redux/postSlice/postsSlice";
+import { useAction, useAppSelector } from "../hook/hooks";
 // types
 import { TransitionProps, IPostsState } from "../redux/postSlice/types";
 // All title function
 import { titleTable } from "../Routing";
 
+// Mui Alert
 function TransitionRight(props: TransitionProps) {
   return <Slide {...props} direction="up" />;
 }
 
 const PostTable: FC = (): JSX.Element => {
-  const dispatch = useAppDispatch();
   const { posts, error, status } = useAppSelector((state) => state.post);
+  const { username, password } = useAppSelector((state) => state.comment.logIn);
+
+  const { fetchPosts, asyncDeletePosts } = useAction();
 
   const [open, setOpen] = useState(false);
 
@@ -38,7 +39,7 @@ const PostTable: FC = (): JSX.Element => {
   >(undefined);
 
   useEffect(() => {
-    dispatch(fetchPosts());
+    fetchPosts();
   }, []);
 
   const deleteAsyncPost =
@@ -49,7 +50,7 @@ const PostTable: FC = (): JSX.Element => {
     () => {
       setTransition(() => Transition);
       setOpen(true);
-      dispatch(asyncDeletePosts(element.id));
+      asyncDeletePosts(element.id);
     };
 
   return (
@@ -65,7 +66,9 @@ const PostTable: FC = (): JSX.Element => {
                   <TableCell>{titleTable("ID")}</TableCell>
                   <TableCell align="left">{titleTable("Title")}</TableCell>
                   <TableCell align="left">{titleTable("Body")}</TableCell>
-                  <TableCell align="center">{titleTable("Action")}</TableCell>
+                  {username && password ? (
+                    <TableCell align="center">{titleTable("Action")}</TableCell>
+                  ) : null}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -75,15 +78,17 @@ const PostTable: FC = (): JSX.Element => {
                       <TableCell>{<b>{post.id}</b>}</TableCell>
                       <TableCell align="left">{post.title}</TableCell>
                       <TableCell align="left">{post.body}</TableCell>
-                      <TableCell align="center">
-                        <Tooltip title="Delete" arrow>
-                          <IconButton
-                            onClick={deleteAsyncPost(TransitionRight, post)}
-                          >
-                            <DeleteOutlineRoundedIcon color="secondary" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                      {username && password ? (
+                        <TableCell align="center">
+                          <Tooltip title="Delete" arrow>
+                            <IconButton
+                              onClick={deleteAsyncPost(TransitionRight, post)}
+                            >
+                              <DeleteOutlineRoundedIcon color="secondary" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      ) : null}
                     </TableRow>
                   )
                 )}

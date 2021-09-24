@@ -18,19 +18,21 @@ import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepOutlined";
 import { titleTable } from "../Routing";
 
 import { IUsersAddressState } from "../redux/usersSlice/types";
+import { useAppSelector } from "../hook/hooks";
 
 interface IRowProps {
   id: number;
   name: string;
   email: string;
-  username: string;
+  userName: string;
   address: IUsersAddressState;
   deleteUsersItem: (id: number) => void;
 }
 
 const UsersItem: FC<IRowProps> = (props) => {
-  const [open, setOpen] = useState(false);
-  const { id, name, username, email, address, deleteUsersItem } = props;
+  const [open, setOpen] = useState<boolean>(false);
+  const { id, name, userName, email, address, deleteUsersItem } = props;
+  const { username, password } = useAppSelector((state) => state.comment.logIn);
 
   return (
     <Fragment>
@@ -51,11 +53,13 @@ const UsersItem: FC<IRowProps> = (props) => {
           {name}
         </TableCell>
         <TableCell align="left">{email}</TableCell>
-        <TableCell align="center">
-          <Button onClick={() => deleteUsersItem(id)}>
-            <DeleteSweepOutlinedIcon color="warning" />
-          </Button>
-        </TableCell>
+        {username && password ? (
+          <TableCell align="center">
+            <Button onClick={() => deleteUsersItem(id)}>
+              <DeleteSweepOutlinedIcon color="warning" />
+            </Button>
+          </TableCell>
+        ) : null}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -79,7 +83,7 @@ const UsersItem: FC<IRowProps> = (props) => {
                     <TableCell align="left">
                       {`${address.city} - ${address.street}`}
                     </TableCell>
-                    <TableCell align="left">{username}</TableCell>
+                    <TableCell align="left">{userName}</TableCell>
                     <TableCell align="left">Total price ($)</TableCell>
                   </TableRow>
                 </TableBody>

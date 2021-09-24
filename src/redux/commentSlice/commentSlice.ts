@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IComments, ICommentState } from './types';
+import { IComments, ICommentState, ILogInState } from './types';
 
 
 export const fetchComments = createAsyncThunk(
@@ -77,6 +77,10 @@ export const fetchCommentsDelete = createAsyncThunk(
 
 const initialState: IComments = {
     comments: [],
+    logIn: {
+        username: "",
+        password: ""
+    },
     status: null,
     error: null
 }
@@ -93,6 +97,12 @@ const commentSlice = createSlice({
         },
         deleteComments: (state, action) => {
             state.comments = state.comments.filter((el) => el.id !== action.payload.id)
+        },
+        logIn: (state, action: PayloadAction<ILogInState>) => {
+            state.logIn = action.payload
+        },
+        logOut: (state, action: PayloadAction<ILogInState>) => {
+            state.logIn = action.payload
         }
     },
     extraReducers: {
@@ -111,5 +121,5 @@ const commentSlice = createSlice({
     }
 })
 
-export const { changeEvent, deleteComments, addComments } = commentSlice.actions
+export const { changeEvent, deleteComments, addComments, logIn, logOut } = commentSlice.actions
 export default commentSlice.reducer

@@ -10,23 +10,20 @@ import { Grid } from "@material-ui/core";
 import { pink } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
 import RestoreFromTrashRoundedIcon from "@mui/icons-material/RestoreFromTrashRounded";
-import { useAppDispatch, useAppSelector } from "../hook/hooks";
-
-import {
-  fetchAsyncDeleteTodo,
-  toggleChecked,
-} from "../redux/todosSlice/todosSlice";
+import { useAction, useAppSelector } from "../hook/hooks";
 
 interface IProps {
   id: number;
   title: string;
   checked: boolean;
-  index: number;
 }
 
 const TodoItem: FC<IProps> = (props) => {
-  const dispatch = useAppDispatch();
-  const { id, title, checked, index } = props;
+  const { id, title, checked } = props;
+
+  const { username, password } = useAppSelector((state) => state.comment.logIn);
+
+  const { fetchAsyncDeleteTodo, toggleChecked } = useAction();
 
   return (
     <Grid item xs={12} md={4}>
@@ -39,24 +36,26 @@ const TodoItem: FC<IProps> = (props) => {
             {title}
           </Typography>
         </CardContent>
-        <CardActions
-          style={{ display: "flex", justifyContent: "space-between" }}
-        >
-          <Checkbox
-            value={checked}
-            onChange={() => dispatch(toggleChecked(id))}
-            sx={{
-              color: pink[800],
-              "&.Mui-checked": {
-                color: pink[600],
-              },
-            }}
-          />
+        {username && password ? (
+          <CardActions
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Checkbox
+              value={checked}
+              onChange={() => toggleChecked(id)}
+              sx={{
+                color: pink[800],
+                "&.Mui-checked": {
+                  color: pink[600],
+                },
+              }}
+            />
 
-          <Button onClick={() => dispatch(fetchAsyncDeleteTodo(id))}>
-            <RestoreFromTrashRoundedIcon />
-          </Button>
-        </CardActions>
+            <Button onClick={() => fetchAsyncDeleteTodo(id)}>
+              <RestoreFromTrashRoundedIcon />
+            </Button>
+          </CardActions>
+        ) : null}
       </Card>
     </Grid>
   );

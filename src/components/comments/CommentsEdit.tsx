@@ -11,9 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import Tooltip from "@mui/material/Tooltip";
 
-import { useAppDispatch } from "../../hook/hooks";
+import { useAction } from "../../hook/hooks";
 import { ICommentState } from "../../redux/commentSlice/types";
-import { fetchCommentsEdit } from "../../redux/commentSlice/commentSlice";
 
 interface ICommentsProps {
   element: ICommentState;
@@ -21,17 +20,18 @@ interface ICommentsProps {
 
 const CommentsEdit: FC<ICommentsProps> = (element) => {
   const { element: el } = element;
+
   const [open, setOpen] = useState<boolean>(false);
 
-  const [value, setValue] = useState(el);
+  const { fetchCommentsEdit } = useAction();
 
-  const dispatch = useAppDispatch();
+  const [value, setValue] = useState(el);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    let newName = e.target.name,
-      newValue = e.target.value;
+    let newName = e.target.name;
+    let newValue = e.target.value;
     setValue({
       ...value,
       [newName]: newValue,
@@ -39,7 +39,7 @@ const CommentsEdit: FC<ICommentsProps> = (element) => {
   };
 
   const handleSubmit = () => {
-    dispatch(fetchCommentsEdit(value));
+    fetchCommentsEdit(value);
     setOpen(false);
   };
 

@@ -17,27 +17,27 @@ import Tooltip from "@mui/material/Tooltip";
 // mui icons
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 // hooks
-import { useAppDispatch, useAppSelector } from "../../hook/hooks";
+import { useAppSelector } from "../../hook/hooks";
 // custom function title for table
 import { titleTable } from "../../Routing";
-import {
-  fetchComments,
-  fetchCommentsDelete,
-} from "../../redux/commentSlice/commentSlice";
+
 import { ICommentState } from "../../redux/commentSlice/types";
 // components
 import { CommentsEdit } from "./CommentsEdit";
 import { CommentsAdd } from "./CommentsAdd";
 
-const CommentsTable: FC = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const { comments, error } = useAppSelector((state) => state.comment);
+import { useAction } from "../../hook/hooks";
 
+const CommentsTable: FC = (): JSX.Element => {
+  const { comments, error, logIn } = useAppSelector((state) => state.comment);
+
+  const { fetchCommentsDelete, fetchComments } = useAction();
+  // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(5);
 
   useEffect(() => {
-    dispatch(fetchComments());
+    fetchComments();
   }, []);
 
   // Get current posts
@@ -55,15 +55,17 @@ const CommentsTable: FC = (): JSX.Element => {
         <>
           {comments.length > 0 ? (
             <Box className="width-table">
-              <Box
-                style={{
-                  display: "flex",
-                  justifyContent: "end",
-                  marginBottom: "10px",
-                }}
-              >
-                <CommentsAdd />
-              </Box>
+              {logIn.username === "admin" && logIn.password === "123" ? (
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "end",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <CommentsAdd />
+                </Box>
+              ) : null}
               <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
@@ -75,10 +77,17 @@ const CommentsTable: FC = (): JSX.Element => {
                       <TableCell align="left">{titleTable("Name")}</TableCell>
                       <TableCell align="left">{titleTable("Email")}</TableCell>
                       <TableCell align="left">{titleTable("Body")}</TableCell>
-                      <TableCell align="center">{titleTable("Edit")}</TableCell>
-                      <TableCell align="center">
-                        {titleTable("Delete")}
-                      </TableCell>
+                      {logIn.username === "admin" &&
+                      logIn.password === "123" ? (
+                        <>
+                          <TableCell align="center">
+                            {titleTable("Edit")}
+                          </TableCell>
+                          <TableCell align="center">
+                            {titleTable("Delete")}
+                          </TableCell>
+                        </>
+                      ) : null}
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -92,27 +101,30 @@ const CommentsTable: FC = (): JSX.Element => {
                           <TableCell align="left">{item.name}</TableCell>
                           <TableCell align="left">{item.email}</TableCell>
                           <TableCell align="left">{item.body}</TableCell>
-                          <TableCell align="center">
-                            <CommentsEdit element={item} />
-                          </TableCell>
-                          <TableCell align="center">
-                            <Tooltip title="Delete comments" arrow>
-                              <IconButton
-                                onClick={() =>
-                                  dispatch(fetchCommentsDelete(item.id))
-                                }
-                              >
-                                <DeleteForeverRoundedIcon color="warning" />
-                              </IconButton>
-                            </Tooltip>
-                          </TableCell>
+                          {logIn.username === "admin" &&
+                          logIn.password === "123" ? (
+                            <>
+                              <TableCell align="center">
+                                <CommentsEdit element={item} />
+                              </TableCell>
+                              <TableCell align="center">
+                                <Tooltip title="Delete comments" arrow>
+                                  <IconButton
+                                    onClick={() => fetchCommentsDelete(item.id)}
+                                  >
+                                    <DeleteForeverRoundedIcon color="warning" />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
+                            </>
+                          ) : null}
                         </TableRow>
                       )
                     )}
                   </TableBody>
                 </Table>
               </TableContainer>
-              {/* Pagination Component */}
+              {/* Pagination Place */}
               <Box
                 sx={{
                   display: "flex",

@@ -6,8 +6,15 @@ export interface ICommentState {
     body: string
 }
 
+export interface ILogInState {
+    username: string
+    password: string
+}
+
 export interface IComments {
     comments: ICommentState[]
+    logIn: ILogInState
     status: null | string,
     error: null | string
 }
+
