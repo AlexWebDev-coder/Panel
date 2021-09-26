@@ -112,7 +112,7 @@ const CommentsTable: FC = (): JSX.Element => {
                                   <IconButton
                                     onClick={() => fetchCommentsDelete(item.id)}
                                   >
-                                    <DeleteForeverRoundedIcon color="warning" />
+                                    <DeleteForeverRoundedIcon color="error" />
                                   </IconButton>
                                 </Tooltip>
                               </TableCell>
