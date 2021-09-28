@@ -1,5 +1,4 @@
 /** @format */
-
 import { FC } from "react";
 import Box from "@material-ui/core/Box";
 import Drawer from "@material-ui/core/Drawer";
@@ -7,7 +6,6 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
 import { ListItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Divider from "@mui/material/Divider";

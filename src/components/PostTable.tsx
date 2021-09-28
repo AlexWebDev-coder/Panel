@@ -27,7 +27,7 @@ function TransitionRight(props: TransitionProps) {
 }
 
 const PostTable: FC = (): JSX.Element => {
-  const { posts, error, status } = useAppSelector((state) => state.post);
+  const { posts, error } = useAppSelector((state) => state.post);
   const { username, password } = useAppSelector((state) => state.comment.logIn);
 
   const { fetchPosts, asyncDeletePosts } = useAction();

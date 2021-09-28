@@ -13,6 +13,7 @@ import Pagination from "@mui/material/Pagination";
 import Box from "@mui/system/Box";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 
 // mui icons
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
