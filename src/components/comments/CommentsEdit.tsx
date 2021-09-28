@@ -30,8 +30,6 @@ const CommentsEdit: FC<ICommentsProps> = (element) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // let newName = e.target.name;
-    // let newValue = e.target.value;
     setValue({
       ...value,
       [e.target.name]: e.target.value,
