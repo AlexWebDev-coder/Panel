@@ -62,7 +62,7 @@ export const fetchEnglishEdit = createAsyncThunk(
     "englishUsers/fetchEnglishEdit", async (data: IUsersState, { rejectWithValue, dispatch }) => {
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/comments`, {
-                method: "POST",
+                method: "PUT",
             })
 
             if (!response.ok) {
