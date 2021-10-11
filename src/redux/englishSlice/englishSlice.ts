@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUsers, IUsersState, TPayload, THeaders, IParams } from './types';
+import { IUsers, IUsersState, TPayload, THeaders } from './types';
 import { Fetchs } from "../../helper"
 
 
