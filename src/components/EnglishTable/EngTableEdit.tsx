@@ -12,18 +12,18 @@ import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import Tooltip from "@mui/material/Tooltip";
 
 import { useAction } from "../../hook/hooks";
-import { ICommentState } from "../../redux/commentSlice/types";
+import { IUsersState } from "../../redux/englishSlice/types";
 
-interface ICommentsProps {
-  element: ICommentState;
+interface IUsersProps {
+  element: IUsersState;
 }
 
-const CommentsEdit: FC<ICommentsProps> = (element) => {
+const EngTableEdit: FC<IUsersProps> = (element) => {
   const { element: el } = element;
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const { fetchCommentsEdit } = useAction();
+  const { fetchEnglishEdit } = useAction();
 
   const [value, setValue] = useState(el);
 
@@ -37,14 +37,14 @@ const CommentsEdit: FC<ICommentsProps> = (element) => {
   };
 
   const handleSubmit = () => {
-    fetchCommentsEdit(value);
+    fetchEnglishEdit(value);
     setOpen(false);
   };
 
   return (
     <div>
       <IconButton onClick={() => setOpen(true)}>
-        <Tooltip title="Edit comments" arrow>
+        <Tooltip title="Edit users" arrow>
           <ModeEditRoundedIcon color="info" />
         </Tooltip>
       </IconButton>
@@ -88,4 +88,4 @@ const CommentsEdit: FC<ICommentsProps> = (element) => {
   );
 };
 
-export { CommentsEdit };
+export { EngTableEdit };

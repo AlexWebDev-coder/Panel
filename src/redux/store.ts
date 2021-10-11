@@ -1,20 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 // Reducers
-import postReducer from "./postSlice/postsSlice"
-import commentReducer from "./commentSlice/commentSlice"
+import englishReducer from "./englishSlice/englishSlice"
 import usersReducer from "./usersSlice/userSlice"
-import todoReducer from "./todosSlice/todosSlice"
+import deleteUserReducer from "./deletedUserSlice/deletedUsersSlice"
 
 export const store = configureStore({
     reducer: {
-        post: postReducer,
-        comment: commentReducer,
+        englishForm: englishReducer,
         users: usersReducer,
-        todo: todoReducer
-    }
+        deleteUsers: deleteUserReducer
+    },
 })
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-
-export default store

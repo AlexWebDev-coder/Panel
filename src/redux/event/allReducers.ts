@@ -1,12 +1,9 @@
-import { commentReducer } from "../commentSlice/reducer";
-import { postReducer } from "../postSlice/reducer";
-import { todoReducer } from "../todosSlice/reducer";
+import { englishReducer } from "../englishSlice/reducer";
 import { userReducer } from "../usersSlice/reducer";
-
+import { deletedUsersReducer } from "../deletedUserSlice/reducer";
 
 export const allReducers = {
-    ...commentReducer,
-    ...postReducer,
-    ...todoReducer,
-    ...userReducer
+    ...englishReducer,
+    ...userReducer,
+    ...deletedUsersReducer
 }

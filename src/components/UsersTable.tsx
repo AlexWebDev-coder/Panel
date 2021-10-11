@@ -13,13 +13,14 @@ import Paper from "@mui/material/Paper";
 import { titleTable } from "../Routing";
 import { useAppSelector, useAction } from "../hook/hooks";
 
+import { Panel } from "../components/RoutingPanel";
+
 import { IUsersState } from "../redux/usersSlice/types";
 
 import { UsersItem } from "./ItemUsersTable";
 
 const UsersTable: FC = (): JSX.Element => {
   const { users, error } = useAppSelector((state) => state.users);
-  const { username, password } = useAppSelector((state) => state.comment.logIn);
 
   const { fetchUsers, fetchUsersDelete } = useAction();
 
@@ -34,38 +35,41 @@ const UsersTable: FC = (): JSX.Element => {
       {error ? (
         <h2 className="width-table">Error: {error}</h2>
       ) : (
-        <Box className="width-table">
-          <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">{titleTable("ID")}</TableCell>
-                  <TableCell align="left">{titleTable("Name")}</TableCell>
-                  <TableCell align="left">{titleTable("Email")}</TableCell>
-                  {username && password ? (
+        <>
+          <Box className="table-margin">
+            <Panel />
+          </Box>
+          <Box className="width-table">
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="left">{titleTable("ID")}</TableCell>
+                    <TableCell align="left">{titleTable("Name")}</TableCell>
+                    <TableCell align="left">{titleTable("Email")}</TableCell>
                     <TableCell align="center">{titleTable("Action")}</TableCell>
-                  ) : null}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map(
-                  (user: IUsersState): JSX.Element => (
-                    <UsersItem
-                      key={user.id}
-                      id={user.id}
-                      name={user.name}
-                      email={user.email}
-                      userName={user.username}
-                      address={user.address}
-                      deleteUsersItem={deleteUsersItem}
-                    />
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users.map(
+                    (user: IUsersState): JSX.Element => (
+                      <UsersItem
+                        key={user.id}
+                        id={user.id}
+                        name={user.name}
+                        email={user.email}
+                        userName={user.username}
+                        address={user.address}
+                        deleteUsersItem={deleteUsersItem}
+                      />
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </>
       )}
     </>
   );

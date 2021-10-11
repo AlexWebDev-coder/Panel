@@ -9,15 +9,9 @@ import List from "@material-ui/core/List";
 import { ListItem } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Divider from "@mui/material/Divider";
-
-import { Login } from "./login/Login";
+import Typography from "@mui/material/Typography";
 
 import { useHistory } from "react-router";
-
-import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import QuestionAnswerRoundedIcon from "@mui/icons-material/QuestionAnswerRounded";
-import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
-import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 
 const Panel: FC = (): JSX.Element => {
   const history = useHistory();
@@ -26,8 +20,14 @@ const Panel: FC = (): JSX.Element => {
     <Box>
       <CssBaseline />
       <AppBar position="fixed">
-        <Toolbar style={{ display: "flex", justifyContent: "end" }}>
-          <Login />
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography
+            variant="h4"
+            component="div"
+            className="title width-table"
+          >
+            Onboarding Admin Panel
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent">
@@ -35,36 +35,28 @@ const Panel: FC = (): JSX.Element => {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem>
-              <Button onClick={() => history.push("/")}>
-                <PostAddRoundedIcon /> &nbsp; Posts
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button onClick={() => history.push("/comments")}>
-                <QuestionAnswerRoundedIcon />
-                &nbsp; Comments
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button onClick={() => history.push("/todos")}>
-                <FormatListNumberedRoundedIcon />
-                &nbsp; Todos
+              <Button onClick={() => history.push("/eng-table-form")}>
+                ENG: Table Form
               </Button>
             </ListItem>
             <ListItem>
               <Button onClick={() => history.push("/users")}>
-                <GroupRoundedIcon />
-                &nbsp; Users
+                NOR: Table Form
               </Button>
             </ListItem>
             <Divider />
+
+            <ListItem>
+              <Button onClick={() => history.push("/users")}>Users</Button>
+            </ListItem>
+            <ListItem>
+              <Button onClick={() => history.push("/deletedUsers")}>
+                Deleted users
+              </Button>
+            </ListItem>
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        {/* Table */}
-      </Box>
     </Box>
   );
 };

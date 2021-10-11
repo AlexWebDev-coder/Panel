@@ -13,10 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 
 import { useAction } from "../../hook/hooks";
 
-const CommentsAdd: FC = () => {
+const EngTableAdd: FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { fetchCommentsAdd } = useAction();
+  const { fetchEnglishAdd } = useAction();
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -24,7 +24,7 @@ const CommentsAdd: FC = () => {
 
   const addNewComments = () => {
     if (name && email && body) {
-      fetchCommentsAdd({ postId: 1, id: Date.now(), name, email, body });
+      fetchEnglishAdd({ postId: 1, id: Date.now(), name, email, body });
       setOpen(false);
       clearInput();
     } else alert("Syntax error");
@@ -39,12 +39,12 @@ const CommentsAdd: FC = () => {
   return (
     <>
       <IconButton onClick={() => setOpen(true)}>
-        <Tooltip title="Add new comments" arrow>
+        <Tooltip title="Add new users" arrow onClick={() => setOpen(true)}>
           <AddTaskRoundedIcon color="success" />
         </Tooltip>
       </IconButton>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add new comments</DialogTitle>
+        <DialogTitle>Add new User to English Onboarding</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -80,4 +80,4 @@ const CommentsAdd: FC = () => {
   );
 };
 
-export { CommentsAdd };
+export { EngTableAdd };
